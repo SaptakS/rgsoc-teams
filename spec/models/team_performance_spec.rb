@@ -130,16 +130,7 @@ RSpec.describe TeamPerformance, type: :model do
         end
       end
     end
-
-    describe ".teams_to_remind" do
-      # create all the teams
-      it 'should remind some' do
-        create_all_teams.each { |t| t.update(season: Season.current)}
-        expect(TeamPerformance.teams_to_remind).to match_array([team_nothing, team_commented, team_both_outdated])
-      end
-    end
   end
-
 
   context "after the season" do
     before :each do
