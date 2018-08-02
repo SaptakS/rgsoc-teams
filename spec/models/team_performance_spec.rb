@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TeamPerformance, type: :model do
   def create_all_teams
-    [team_nothing, team_activitiy, team_commented, team_both_outdated, team_both]
+    [team_nothing, team_activitiy, team_commented, team_both]
   end
 
   let :team_nothing do
@@ -18,13 +18,6 @@ RSpec.describe TeamPerformance, type: :model do
   let :team_commented do
     team = create :team
     create :comment, commentable: team
-    team
-  end
-
-  let :team_both_outdated do
-    team = create :team
-    create :comment, commentable: team, created_at: 4.days.ago
-    create :status_update, team: team, created_at: 4.days.ago
     team
   end
 
@@ -60,14 +53,6 @@ RSpec.describe TeamPerformance, type: :model do
 
       context 'for a team without activites but with recent feedback' do
         subject { TeamPerformance.new(team_commented) }
-
-        it "signals green" do
-          expect(subject.evaluation).to eq(:green)
-        end
-      end
-
-      context 'for a team with older activities and older feedback' do
-        subject { TeamPerformance.new(team_both_outdated)}
 
         it "signals green" do
           expect(subject.evaluation).to eq(:green)
@@ -150,14 +135,6 @@ RSpec.describe TeamPerformance, type: :model do
 
       context 'for a team without activites but with recent feedback' do
         subject { TeamPerformance.new(team_commented) }
-
-        it "signals green" do
-          expect(subject.evaluation).to eq(:green)
-        end
-      end
-
-      context 'for a team with older activities and older feedback' do
-        subject { TeamPerformance.new(team_both_outdated)}
 
         it "signals green" do
           expect(subject.evaluation).to eq(:green)
