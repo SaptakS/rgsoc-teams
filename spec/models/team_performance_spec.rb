@@ -122,20 +122,6 @@ RSpec.describe TeamPerformance, type: :model do
         end
       end
 
-      context 'for a team with older activities and older feedback' do
-        subject { TeamPerformance.new(team_both_outdated)}
-
-        it "signals orange" do
-          expect(subject.evaluation).to eq(:orange)
-        end
-
-        it "still signals orange after beeing called repeatedly" do
-          10.times { subject.evaluation }
-
-          expect(subject.evaluation).to eq(:orange)
-        end
-      end
-
       context 'for a team with recent activites and with recent feedback' do
         subject { TeamPerformance.new(team_both) }
 
